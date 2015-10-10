@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="2dp">
+        <!--app:cardCornerRadius="5dp"-->
+        <!--app:cardElevation="10dp"-->
+        <!--app:contentPadding="10dp"-->
+
+        <RelativeLayout
+            android:layout_below="@+id/hp_title"
+            android:id="@+id/ll_center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/img_thumb"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cat"/>
+
+            <ImageView
+                android:id="@+id/img_bg"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:src="@drawable/black_bg"
+                android:scaleType="centerCrop"
+                android:alpha="0.4"
+                android:layout_alignBottom="@+id/img_thumb"/>
+
+            <TextView
+                android:id="@+id/tv_daily_title"
+                android:layout_alignBottom="@+id/img_thumb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:hint="hp_title"
+                android:layout_margin="5dp"
+                android:text="我是  标题"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/tv_daily_date"
+                android:layout_below="@+id/img_thumb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:hint="hp_title"
+                android:layout_margin="5dp"
+                android:textSize="10dp" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/text_daily_content"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_below="@+id/tv_daily_date"/>-->
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

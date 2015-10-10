@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Code\Yige\app\build\intermediates\exploded-aar\jp.wasabeef\recyclerview-animators\1.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="55b967d31b15d92052a5ea2e407378b72d4764a7">
+        <dex dex="C:\Code\Yige\app\build\intermediates\pre-dexed\debug\classes-78aa3b737d4dfb9ea130134bbb9b34931bead961.jar" />
+    </item>
+
+</items>

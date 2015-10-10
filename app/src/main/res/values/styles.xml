@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppTheme.Base"/>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blue_dark</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="CollapsingToolbarTitleStyle"
+        parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <!--Blue-->
+    <color name="blue_dark">#1976D2</color>
+    <color name="blue">#2196F3</color>
+    <color name="blue_50">#E3F2FD</color>
+
+    <!--grey-->
+    <color name="grey">#B6B6B6</color>
+    <!-- white&&black -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#212121</color>
+
+    <!--indigo-->
+    <color name="indigo">#8C9EFF</color>
+
+</resources>

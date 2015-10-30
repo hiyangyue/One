@@ -31,8 +31,7 @@
                 android:id="@+id/img_thumb"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/cat"/>
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:id="@+id/img_bg"
@@ -76,6 +75,7 @@
                 android:paddingLeft="20dp"
                 android:hint="str_content"
                 android:lineSpacingMultiplier="1.4"
+                android:textIsSelectable="true"
                 android:textSize="14dp"/>
 
             <TextView

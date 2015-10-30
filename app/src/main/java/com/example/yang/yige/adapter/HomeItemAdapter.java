@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.yang.yige.R;
 import com.example.yang.yige.activity.HomeDetailActivity;
 import com.example.yang.yige.model.Daily;
@@ -30,7 +31,6 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
     public HomeItemAdapter(Context context,List<Daily> dailyList){
         this.context = context;
         this.dailyList = dailyList;
-
     }
 
     @Override
@@ -53,7 +53,20 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
         //thumbImg
         ImageView thumbImg = viewHolder.imgThumb;
-        Picasso.with(context).load(daily.getThumbImgUrl()).into(thumbImg);
+        if (thumbImg == null){
+            thumbImg = new ImageView(context);
+        }
+
+//        Picasso picasso = Picasso.with(context);
+//        //开启调试模式
+//        picasso.setIndicatorsEnabled(true);
+//        picasso.setLoggingEnabled(true);
+//
+//        picasso.with(context).load(daily.getThumbImgUrl()).
+//                into(thumbImg);
+        Glide.with(context)
+                .load(daily.getThumbImgUrl())
+                .into(thumbImg);
 
         //originalUrl
         strOriginalImgUrl = daily.getStrOriginalImgUrl();
@@ -65,14 +78,12 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
         if (content.contains("。")){
             content.replaceAll("。","\n");
         }
-        String contentAuthor = contentPart[1];
 
         //author
         TextView textAuthor = viewHolder.textAuthor;
         String titleAndAuthor = daily.getAuthor();
         String parts[] = titleAndAuthor.split("&");
         String title = parts[0];
-        String author = parts[1];
         textAuthor.setText(title);
 
     }
@@ -84,7 +95,7 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textDate,textContent,textAuthor;
+        TextView textDate,textAuthor;
         ImageView imgThumb;
 
         public ViewHolder(View view){

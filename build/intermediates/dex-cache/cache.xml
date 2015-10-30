@@ -2,11 +2,102 @@
 <items version="2" >
 
     <item
-        jar="C:\Code\Yige\app\build\intermediates\exploded-aar\jp.wasabeef\recyclerview-animators\1.2.0\jars\classes.jar"
+        jar="C:\One\app\build\intermediates\exploded-aar\jp.wasabeef\recyclerview-animators\1.2.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="55b967d31b15d92052a5ea2e407378b72d4764a7">
-        <dex dex="C:\Code\Yige\app\build\intermediates\pre-dexed\debug\classes-78aa3b737d4dfb9ea130134bbb9b34931bead961.jar" />
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\classes-0bf0a8af02206b4c5be90a6447afb0236ca797b9.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yang\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.5.2\ecf534dba3a8446ce84cbb797d314763be212a68\glide-3.5.2.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ecf534dba3a8446ce84cbb797d314763be212a68">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\glide-3.5.2-b73fac0ca6f9cad83da71ec8d920cc4f3500fc33.jar" />
+    </item>
+    <item
+        jar="C:\One\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\classes-158e2b63efcad91fb34b9f0e3e8df5db1d25e508.jar" />
+    </item>
+    <item
+        jar="C:\One\app\build\intermediates\exploded-aar\com.commit451\PhotoView\1.2.4\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="890be6e1e56a883c9b407a11e067a61886dec123">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\classes-62a02fed48709ed5e9c1dac6bea23bae512091dc.jar" />
+    </item>
+    <item
+        jar="C:\One\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\classes-c77adbc14da5d98da01fd644418ff0c0a72ec585.jar" />
+    </item>
+    <item
+        jar="E:\Android SDK\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\support-annotations-23.0.1-953d3d93c648439988be2e4cece44af5b71a2728.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yang\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.4.1\f5aa318bda4c6c8d688c9d00b90681dcd82ce636\httpcore-4.4.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f5aa318bda4c6c8d688c9d00b90681dcd82ce636">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\httpcore-4.4.1-ced4d6622ebefda291383dba986561e21a0b270c.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yang\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\picasso-2.5.2-5e49e7db5a460fc9340331575b88052dee075d38.jar" />
+    </item>
+    <item
+        jar="C:\One\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\classes-b027b318dbe9eb71419fce651e59c5438be6a0bd.jar" />
+    </item>
+    <item
+        jar="C:\One\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="39ae02ce40c3ac828abbf780ce0ff5d7a28b7d6a">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\classes-ea9e709e00490772804a4d6c8a4f8fe09f926864.jar" />
+    </item>
+    <item
+        jar="C:\One\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\classes-586b1be54cdd63b9c08ce9297c6ecd994b72a97b.jar" />
+    </item>
+    <item
+        jar="C:\One\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\internal_impl-23.0.1-05cce1c39d382faa1fd6d9e8057c292fca04fff3.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yang\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.9\386a4339ffe52d5d63e80f9bed8d2b1d1a418249\android-async-http-1.4.9.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\android-async-http-1.4.9-066bab2cd2f99dc640647da1f90d0b2b8c234288.jar" />
+    </item>
+    <item
+        jar="C:\Users\Yang\.gradle\caches\modules-2\files-2.1\cz.msebera.android\httpclient\4.3.6\526a9f794eab830eae4f23a62c572878b3f491ab\httpclient-4.3.6.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="C:\One\app\build\intermediates\pre-dexed\release\httpclient-4.3.6-0c7c30055396d27ebbc168ebed1b989c4ecb7884.jar" />
     </item>
 
 </items>

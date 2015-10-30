@@ -31,11 +31,10 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 public class QuestionFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private List<Question> questionList = new ArrayList<>();
     private QuestionItemAdapter adapter;
     private String date;
-    private int count = 0;
+    private int count = 1;
 
     private boolean loading = true;
     private int firstVisiblesItems,visibleCount,totalItemCount;
@@ -84,7 +83,6 @@ public class QuestionFragment extends Fragment {
 
     private void init(View view){
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_container);
     }
 
     private void setUpRecyclerView(){

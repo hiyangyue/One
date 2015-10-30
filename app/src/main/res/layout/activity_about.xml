@@ -24,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:paddingTop="40dp"
                 android:orientation="vertical">
 
                 <ImageView
@@ -31,14 +32,14 @@
                     android:layout_height="76dp"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/one_logo"/>
+                    android:src="@drawable/icon"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="「One」 一个"
                     android:textSize="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_gravity="center"
                     android:textColor="@color/white"/>
 
@@ -46,7 +47,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Version 1.0"
+                    android:text="Version 1.1"
                     android:textSize="15dp"
                     android:layout_gravity="center"
                     android:textColor="@color/white"/>

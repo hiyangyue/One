@@ -31,11 +31,10 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 public class ArticleFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private List<Article> articleList = new ArrayList<>();
     private ArticleItemAdapter adapter;
     private String date;
-    private int count = 0;
+    private int count = 1;
 
     private boolean loading = true;
     private int firstVisiblesItems,visibleCount,totalItemCount;
@@ -48,12 +47,12 @@ public class ArticleFragment extends Fragment {
             Log.e("success","success");
 
             String title = response.getTitle();
-            String aurthor = response.getAuthor();
+            String author = response.getAuthor();
             String content = response.getContent();
             String date = response.getDate();
             String webLink = response.getWebLink();
 
-            Article article = new Article(title,aurthor,content,date,webLink);
+            Article article = new Article(title,author,content,date,webLink);
             articleList.add(article);
             adapter.notifyDataSetChanged();
         }
@@ -93,7 +92,6 @@ public class ArticleFragment extends Fragment {
 
     private void init(View view){
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_container);
     }
 
     private void setUpRecyclerView(){
@@ -125,9 +123,9 @@ public class ArticleFragment extends Fragment {
 
                 if (!loading && (totalItemCount - visibleCount) <= (firstVisiblesItems + visibleCount)) {
 
-                    client.get(getActivity(), OneApi.getOneTodayArticle(date, count),handler);
                     //设置最新的count
-                    count = count +1;
+                    count = count + 1;
+                    client.get(getActivity(), OneApi.getOneTodayArticle(date, count),handler);
 
                     loading = true;
                 }

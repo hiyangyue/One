@@ -1,12 +1,14 @@
 package com.example.yang.yige.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.loopj.android.http.BaseJsonHttpResponseHandler;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -31,7 +34,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 /**
  * Created by Yang on 2015/9/29.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -89,6 +92,7 @@ public class HomeFragment extends Fragment {
 
         init(view);
         setUpRecyclerView();
+        setUpSwipeRefreshLayout();
 
         try {
             addItem();
@@ -99,22 +103,30 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private void setUpSwipeRefreshLayout(){
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (date == DateUtils.getDate(new Date())){
+                    Snackbar snackbar = Snackbar.make(recyclerView,"已经是最新的咯 :) ",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            }
+        });
+
+    }
+
     private void setUpRecyclerView() {
         //网格布局，用来显示瀑布流
-//        final StaggeredGridLayoutManager gridLayoutManager =
-//                new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(gridLayoutManager);
         final LinearLayoutManager layoutManager;
         layoutManager = new GridLayoutManager(getActivity(),2);
         recyclerView.setLayoutManager(layoutManager);
-
-
         recyclerView.setItemAnimator(new SlideInUpAnimator());
-
+        recyclerView.setHasFixedSize(true);
         adapter = new HomeItemAdapter(getContext(),setUpData());
         recyclerView.setAdapter(adapter);
 
-       recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -123,28 +135,31 @@ public class HomeFragment extends Fragment {
                 totalItemCount = layoutManager.getItemCount();
                 firstVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
-                if (loading){
-                    if (totalItemCount > previousTotal){
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
                         loading = false;
                         previousTotal = totalItemCount;
                     }
                 }
 
-                if (!loading && (totalItemCount - visibleCount) <= (firstVisiblesItems + visibleCount) ){
+                if (!loading && (totalItemCount - visibleCount) <= (firstVisiblesItems + visibleCount)) {
 
+                    swipeRefreshLayout.setRefreshing(true);
                     client.get(getActivity(), OneApi.getOneTodayHome(date), handler);
+                    swipeRefreshLayout.setRefreshing(false);
                     //设置最新的时间
                     try {
                         date = DateUtils.parseDate(date);
                     } catch (ParseException e) {
                         e.printStackTrace();
-                    }
+                            }
 
-                    loading = true;
-                }
-            }
-        });
+                            loading = true;
+                        }
+                    }
+                });
     }
+
 
     private List<Daily> setUpData(){
         dailyList = new ArrayList<>();
@@ -167,6 +182,5 @@ public class HomeFragment extends Fragment {
 
 
     }
-
 
 }

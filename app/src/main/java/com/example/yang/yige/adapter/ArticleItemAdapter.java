@@ -57,6 +57,9 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
 
         articleTitle.setText(article.getTitle());
         articleAuthor.setText(author);
+
+//        String contentArticle = article.getContent().replaceAll("<br>","\n");
+//        articleContent.setText(contentArticle.replaceAll("1",""));
         articleContent.setText(article.getContent().replaceAll("<br>","\n"));
         articleDate.setText(date);
     }

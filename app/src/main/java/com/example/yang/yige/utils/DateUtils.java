@@ -10,15 +10,6 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    private static DateUtils dateUtils = null;
-    public static DateUtils getInstance(){
-        if (dateUtils == null){
-            dateUtils = new DateUtils();
-        }
-
-        return dateUtils;
-    }
-
     public static String getDate(Date date){
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -27,15 +18,22 @@ public class DateUtils {
         return formatDate;
     }
 
-    public static String parseDate(String date) throws ParseException {
+    public static String parseDate(String date) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date d1 = df.parse(date);
-        System.out.println("d1==" + df.format(d1));
-        Calendar g = Calendar.getInstance();
-        g.setTime(d1);
-        g.add(Calendar.DATE, -1);
-        Date d2 = g.getTime();
-        return df.format(d2);
+        Date d1 = null;
+        try {
+            d1 = df.parse(date);
+            System.out.println("d1==" + df.format(d1));
+            Calendar g = Calendar.getInstance();
+            g.setTime(d1);
+            g.add(Calendar.DATE, -1);
+            Date d2 = g.getTime();
+            return df.format(d2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 

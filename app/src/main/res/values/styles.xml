@@ -17,6 +17,7 @@
     <color name="blue_dark">#1976D2</color>
     <color name="blue">#2196F3</color>
     <color name="blue_50">#E3F2FD</color>
+    <color name="blue_light">#42A5F5</color>
 
     <!--grey-->
     <color name="grey">#B6B6B6</color>

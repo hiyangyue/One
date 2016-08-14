@@ -1,8 +1,11 @@
 package com.example.yang.yige.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.example.yang.yige.R;
 import com.example.yang.yige.activity.HomeDetailActivity;
 import com.example.yang.yige.model.Daily;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -25,8 +27,6 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
     private List<Daily> dailyList;
     private Context context;
-    private String thumbImgUrl;
-    private String strOriginalImgUrl;
 
     public HomeItemAdapter(Context context,List<Daily> dailyList){
         this.context = context;
@@ -38,9 +38,7 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_home, viewGroup, false);
-
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -57,19 +55,9 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
             thumbImg = new ImageView(context);
         }
 
-//        Picasso picasso = Picasso.with(context);
-//        //开启调试模式
-//        picasso.setIndicatorsEnabled(true);
-//        picasso.setLoggingEnabled(true);
-//
-//        picasso.with(context).load(daily.getThumbImgUrl()).
-//                into(thumbImg);
         Glide.with(context)
                 .load(daily.getThumbImgUrl())
                 .into(thumbImg);
-
-        //originalUrl
-        strOriginalImgUrl = daily.getStrOriginalImgUrl();
 
         //content && title
         String contentAuthorAndTitle = daily.getContent();
@@ -85,7 +73,6 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
         String parts[] = titleAndAuthor.split("&");
         String title = parts[0];
         textAuthor.setText(title);
-
     }
 
     @Override
@@ -93,40 +80,45 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
         return dailyList.size();
     }
 
-    public  class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView textDate,textAuthor;
-        ImageView imgThumb;
+        ImageView imgThumb,ivBg;
 
         public ViewHolder(View view){
             super(view);
             textDate = (TextView) view.findViewById(R.id.tv_daily_date);
             imgThumb = (ImageView) view.findViewById(R.id.img_thumb);
             textAuthor = (TextView) view.findViewById(R.id.tv_daily_title);
+            ivBg = (ImageView) view.findViewById(R.id.img_bg);
 
-            imgThumb.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Daily daily = dailyList.get(getLayoutPosition());
-                    String titleAndAuthor = daily.getAuthor();
-                    String thumbImgUrl = daily.getThumbImgUrl();
-                    String originalImgUrl = daily.getStrOriginalImgUrl();
-                    String content = daily.getContent();
+            view.setOnClickListener(this);
+        }
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("titleAndAuthor", titleAndAuthor);
-                    bundle.putString("thumbImgUrl",thumbImgUrl);
-                    bundle.putString("originalImgUrl", originalImgUrl);
-                    bundle.putString("content", content);
-                    bundle.putString("strMarketTime", daily.getStrMarketTime());
+        @Override
+        public void onClick(View view) {
+            Daily daily = dailyList.get(getLayoutPosition());
+            String titleAndAuthor = daily.getAuthor();
+            String thumbImgUrl = daily.getThumbImgUrl();
+            String originalImgUrl = daily.getStrOriginalImgUrl();
+            String content = daily.getContent();
 
-                    Intent intent = new Intent(context,HomeDetailActivity.class);
-                    intent.putExtras(bundle);
+            Bundle bundle = new Bundle();
+            bundle.putString("titleAndAuthor", titleAndAuthor);
+            bundle.putString("thumbImgUrl",thumbImgUrl);
+            bundle.putString("originalImgUrl", originalImgUrl);
+            bundle.putString("content", content);
+            bundle.putString("strMarketTime", daily.getStrMarketTime());
 
-                    context.startActivity(intent);
-                }
-            });
+            Intent intent = new Intent(context,HomeDetailActivity.class);
+            intent.putExtras(bundle);
 
+            Pair<View, String> p1 = Pair.create((View)textAuthor, "name");
+            Pair<View, String> p2 = Pair.create((View)imgThumb, "iv_content");
+            Pair<View,String> p3 = Pair.create((View)ivBg,"iv_bg");
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation((Activity) context, p1, p2,p3);
+            context.startActivity(intent, options.toBundle());
         }
     }
 }

@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         init();
@@ -67,14 +68,13 @@ public class MainActivity extends AppCompatActivity {
     private void setUpViewPager(){
         adapter = new MyFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private void setUpTabLayout(){
-
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

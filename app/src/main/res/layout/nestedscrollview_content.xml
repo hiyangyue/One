@@ -16,22 +16,15 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:cardCornerRadius="2dp"
         app:cardBackgroundColor="@color/blue_50"
         app:cardElevation="2dp">
 
-        <RelativeLayout
+        <TextView
             android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/about_me" />
-
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:text="@string/about_me" />
 
     </android.support.v7.widget.CardView>
 
@@ -56,17 +49,39 @@
         app:cardBackgroundColor="@color/blue_50"
         app:cardElevation="2dp">
 
-        <RelativeLayout
+        <TextView
             android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:text="@string/thanks" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/thanks" />
+    </android.support.v7.widget.CardView>
 
-        </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="「特别感谢」"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="2dp"
+        app:cardBackgroundColor="@color/blue_50"
+        app:cardElevation="2dp">
+
+        <TextView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/special_thx" />
 
     </android.support.v7.widget.CardView>
 
@@ -91,17 +106,11 @@
         app:cardBackgroundColor="@color/blue_50"
         app:cardElevation="2dp">
 
-        <RelativeLayout
+        <TextView
             android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/open_source_library" />
-
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:text="@string/open_source_library" />
 
     </android.support.v7.widget.CardView>
 

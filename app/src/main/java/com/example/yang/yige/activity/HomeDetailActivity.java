@@ -2,31 +2,29 @@ package com.example.yang.yige.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.yang.yige.R;
 import com.example.yang.yige.utils.FileUtils;
 import com.example.yang.yige.utils.OneApi;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
+import com.example.yang.yige.utils.SnackbarUtil;
 
 /**
  * Created by Yang on 2015/10/4.
  */
-public class HomeDetailActivity extends AppCompatActivity implements View.OnClickListener{
+public class HomeDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView strAuthor,strTitle,strContent,strContentAuthor;
-    private ImageView imgThumb,imgSend,imgDown;
-    private String titleAndAuthor,thumbImgUrl,originalImgUrl,content,strMarketTime;
+    private TextView strAuthor, strTitle, strContent, strContentAuthor;
+    private ImageView imgThumb, imgSend, imgDown;
+    private String titleAndAuthor, thumbImgUrl, originalImgUrl, content, strMarketTime;
     private RelativeLayout rl;
 
     @Override
@@ -37,11 +35,10 @@ public class HomeDetailActivity extends AppCompatActivity implements View.OnClic
         init();
         getExtrasData();
         setUpData();
-
     }
 
-    private void init(){
-        strAuthor= (TextView) findViewById(R.id.str_author);
+    private void init() {
+        strAuthor = (TextView) findViewById(R.id.str_author);
         strTitle = (TextView) findViewById(R.id.str_title);
         strContent = (TextView) findViewById(R.id.str_content);
         strContentAuthor = (TextView) findViewById(R.id.str_content_author);
@@ -55,23 +52,22 @@ public class HomeDetailActivity extends AppCompatActivity implements View.OnClic
         imgThumb.setOnClickListener(this);
     }
 
-    private void getExtrasData(){
+    private void getExtrasData() {
         Bundle bundle = getIntent().getExtras();
         titleAndAuthor = bundle.getString("titleAndAuthor");
         thumbImgUrl = bundle.getString("thumbImgUrl");
         originalImgUrl = bundle.getString("originalImgUrl");
         content = bundle.getString("content");
         strMarketTime = bundle.getString("strMarketTime");
-        Log.e("strMartketTime",strMarketTime);
     }
 
-    private void setUpData(){
+    private void setUpData() {
         String authorParts[] = titleAndAuthor.split("&");
         String title = authorParts[0];
         String author = authorParts[1];
 
         String contentParts[] = content.split("。");
-        String content = contentParts[0].replaceAll("，","\n");
+        String content = contentParts[0].replaceAll("，", "\n");
         String contentAuthor = contentParts[1];
 
         strTitle.setText(title);
@@ -79,15 +75,25 @@ public class HomeDetailActivity extends AppCompatActivity implements View.OnClic
         strContent.setText(content);
         strContentAuthor.setText("—— " + contentAuthor);
 
-        Picasso.with(this).load(thumbImgUrl).into(imgThumb);
+        Glide.with(this).load(thumbImgUrl).into(imgThumb);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_down:
-                DownloadImgTask task = new DownloadImgTask();
-                task.execute();
+
+                SnackbarUtil.showSnackbar(rl, "图片正在下载中...  ");
+
+                Glide.with(getApplicationContext())
+                        .load(originalImgUrl)
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                FileUtils.saveImageToGallery(HomeDetailActivity.this, resource, rl);
+                            }
+                        });
                 break;
             case R.id.img_send:
                 Intent intent = new Intent();
@@ -96,52 +102,11 @@ public class HomeDetailActivity extends AppCompatActivity implements View.OnClic
                 startActivity(intent);
                 break;
             case R.id.img_thumb:
-                Picasso.with(HomeDetailActivity.this).load(originalImgUrl).fetch(new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Intent pictureIntent = new Intent(HomeDetailActivity.this, PictureActivity.class);
-                        pictureIntent.putExtra(PictureActivity.ORIGINAL_IMG_URL,originalImgUrl);
-                        startActivity(pictureIntent);
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
-
+                Intent pictureIntent = new Intent(HomeDetailActivity.this, PictureActivity.class);
+                pictureIntent.putExtra(PictureActivity.ORIGINAL_IMG_URL, originalImgUrl);
+                startActivity(pictureIntent);
             default:
                 break;
-        }
-    }
-
-
-    class DownloadImgTask extends AsyncTask<Bitmap,Void,Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(Bitmap... params) {
-            return FileUtils.getInstance().getBitmapFromUrl(originalImgUrl);
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            try {
-                //将图片添加到系统的图库之中
-                FileUtils.getInstance().
-                        createImageFile(bitmap,HomeDetailActivity.this);
-                //下载成功之后提示
-                FileUtils.getInstance().
-                        getSnackbarOpenPicture(rl,HomeDetailActivity.this,"下载完成");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            FileUtils.getInstance().getSnackbar(rl, "图片正在下载中...  ");
         }
     }
 }

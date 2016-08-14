@@ -2,7 +2,6 @@ package com.example.yang.yige.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.yang.yige.R;
 import com.example.yang.yige.adapter.ArticleItemAdapter;
+import com.example.yang.yige.listener.EndlessRecyclerOnScrollListener;
 import com.example.yang.yige.model.Article;
 import com.example.yang.yige.utils.JsonParseUtils;
 import com.example.yang.yige.utils.OneApi;
@@ -36,15 +36,10 @@ public class ArticleFragment extends Fragment {
     private String date;
     private int count = 1;
 
-    private boolean loading = true;
-    private int firstVisiblesItems,visibleCount,totalItemCount;
-    private int previousTotal = 0;
-
     private AsyncHttpClient client = new AsyncHttpClient();
     private AsyncHttpResponseHandler handler = new BaseJsonHttpResponseHandler<Article>() {
         @Override
         public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Article response) {
-            Log.e("success","success");
 
             String title = response.getTitle();
             String author = response.getAuthor();
@@ -104,31 +99,12 @@ public class ArticleFragment extends Fragment {
 
         adapter = new ArticleItemAdapter(getActivity(),articleList);
         recyclerView.setAdapter(adapter);
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                visibleCount = layoutManager.getChildCount();
-                totalItemCount = layoutManager.getItemCount();
-                firstVisiblesItems = layoutManager.findFirstVisibleItemPosition();
-
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-
-                if (!loading && (totalItemCount - visibleCount) <= (firstVisiblesItems + visibleCount)) {
-
-                    //设置最新的count
-                    count = count + 1;
-                    client.get(getActivity(), OneApi.getOneTodayArticle(date, count),handler);
-
-                    loading = true;
-                }
+            public void onLoadMore(int current_page) {
+                //设置最新的count
+                count = count + 1;
+                client.get(getActivity(), OneApi.getOneTodayArticle(date, count),handler);
             }
         });
 

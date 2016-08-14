@@ -14,7 +14,6 @@ import org.json.JSONObject;
  */
 public class JsonParseUtils {
 
-    private Daily daily;
     private Article article;
     private Question question;
     private static JsonParseUtils jsonParseUtils = null;
@@ -46,9 +45,7 @@ public class JsonParseUtils {
         String strContent = object.getString("strContent");
         String strMarketTime = object.getString("strMarketTime");
 
-        daily = new Daily(strHpTitle,strAuthor,strContent,strThumbnailUrl,strOriginalImgUrl,strMarketTime);
-
-        return daily;
+        return new Daily(strHpTitle,strAuthor,strContent,strThumbnailUrl,strOriginalImgUrl,strMarketTime);
     }
 
     //解析Article Json数据

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +52,7 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         return questionList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView title;
         RelativeLayout relativeLayout;
@@ -61,16 +60,15 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
         public ViewHolder(View itemView) {
             super(itemView);
 
+            itemView.setOnClickListener(this);
             title = (TextView) itemView.findViewById(R.id.question_title);
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rl_question);
+        }
 
-            relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Question question = questionList.get(getLayoutPosition());
-                    startWebActivity(question.getQuestionUrl());
-                }
-            });
+        @Override
+        public void onClick(View view) {
+            Question question = questionList.get(getLayoutPosition());
+            startWebActivity(question.getQuestionUrl());
         }
     }
 

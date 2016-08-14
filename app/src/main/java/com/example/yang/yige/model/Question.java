@@ -13,10 +13,6 @@ public class Question {
         return marketTime;
     }
 
-    public void setMarketTime(String marketTime) {
-        this.marketTime = marketTime;
-    }
-
     public Question(String marketTime, String title, String questionUrl) {
         this.marketTime = marketTime;
 
@@ -36,7 +32,4 @@ public class Question {
         return questionUrl;
     }
 
-    public void setQuestionUrl(String questionUrl) {
-        this.questionUrl = questionUrl;
-    }
 }

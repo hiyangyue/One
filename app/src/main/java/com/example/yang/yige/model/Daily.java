@@ -24,24 +24,12 @@ public class Daily implements Serializable{
         return thumbImgUrl;
     }
 
-    public void setThumbImgUrl(String thumbImgUrl) {
-        this.thumbImgUrl = thumbImgUrl;
-    }
-
     public String getStrMarketTime() {
         return strMarketTime;
     }
 
-    public void setStrMarketTime(String strMarketTime) {
-        this.strMarketTime = strMarketTime;
-    }
-
     public String getStrOriginalImgUrl() {
         return strOriginalImgUrl;
-    }
-
-    public void setStrOriginalImgUrl(String strOriginalImgUrl) {
-        this.strOriginalImgUrl = strOriginalImgUrl;
     }
 
     public String getContent() {
@@ -52,7 +40,6 @@ public class Daily implements Serializable{
         this.content = content;
     }
 
-    //test
     public Daily(String hpTitle,String author,String content,String thumbImgUrl,String strOriginalImgUrl,String strMarketTime){
         this.hpTitle = hpTitle;
         this.thumbImgUrl = thumbImgUrl;
@@ -66,18 +53,7 @@ public class Daily implements Serializable{
         return hpTitle;
     }
 
-    public void setHpTitle(String hpTitle) {
-        this.hpTitle = hpTitle;
-    }
-
-
     public String getAuthor() {
         return author;
     }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-
 }

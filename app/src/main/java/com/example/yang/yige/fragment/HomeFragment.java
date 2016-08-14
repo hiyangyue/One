@@ -1,5 +1,6 @@
 package com.example.yang.yige.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -8,13 +9,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.yang.yige.R;
 import com.example.yang.yige.adapter.HomeItemAdapter;
+import com.example.yang.yige.listener.EndlessRecyclerOnScrollListener;
 import com.example.yang.yige.model.Daily;
 import com.example.yang.yige.utils.DateUtils;
 import com.example.yang.yige.utils.JsonParseUtils;
@@ -23,9 +24,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -34,7 +33,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 /**
  * Created by Yang on 2015/9/29.
  */
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -43,10 +42,6 @@ public class HomeFragment extends Fragment{
     private String date;
     private Daily daily;
 
-    private boolean loading = true;
-    private int firstVisiblesItems,visibleCount,totalItemCount;
-    private int previousTotal = 0;
-
     AsyncHttpClient client = new AsyncHttpClient();
     AsyncHttpResponseHandler handler = new BaseJsonHttpResponseHandler<Daily>() {
         @Override
@@ -54,26 +49,25 @@ public class HomeFragment extends Fragment{
 
             String title = response.getHpTitle();
             String thumbImgUrl = response.getThumbImgUrl();
-            Log.e("thumbUmgUrl",thumbImgUrl);
+            Log.e("thumbUmgUrl", thumbImgUrl);
             String strOriginalImgUrl = response.getStrOriginalImgUrl();
             String content = response.getContent();
             String author = response.getAuthor();
             String strMarketTime = response.getStrMarketTime();
-            daily = new Daily(title,author,content,thumbImgUrl,strOriginalImgUrl,strMarketTime);
+            daily = new Daily(title, author, content, thumbImgUrl, strOriginalImgUrl, strMarketTime);
 
             dailyList.add(daily);
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemRangeInserted(dailyList.size(), 1);
         }
 
         @Override
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Daily errorResponse) {
-            Log.e("faliture","so sad. :( ");
+            Log.e("faliture", "so sad. :( ");
         }
 
         @Override
         protected Daily parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
-            Daily daily = JsonParseUtils.getInstance().parseHomeDetail(rawJsonData);
-            return daily;
+            return JsonParseUtils.getInstance().parseHomeDetail(rawJsonData);
         }
     };
 
@@ -92,76 +86,34 @@ public class HomeFragment extends Fragment{
 
         init(view);
         setUpRecyclerView();
-        setUpSwipeRefreshLayout();
-
-        try {
-            addItem();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        addItem();
 
         return view;
     }
 
-    private void setUpSwipeRefreshLayout(){
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (date == DateUtils.getDate(new Date())){
-                    Snackbar snackbar = Snackbar.make(recyclerView,"已经是最新的咯 :) ",Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                }
-            }
-        });
-
-    }
-
     private void setUpRecyclerView() {
+
         //网格布局，用来显示瀑布流
         final LinearLayoutManager layoutManager;
-        layoutManager = new GridLayoutManager(getActivity(),2);
+        layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new SlideInUpAnimator());
         recyclerView.setHasFixedSize(true);
-        adapter = new HomeItemAdapter(getContext(),setUpData());
+        adapter = new HomeItemAdapter(getContext(), setUpData());
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                visibleCount = layoutManager.getChildCount();
-                totalItemCount = layoutManager.getItemCount();
-                firstVisiblesItems = layoutManager.findFirstVisibleItemPosition();
-
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-
-                if (!loading && (totalItemCount - visibleCount) <= (firstVisiblesItems + visibleCount)) {
-
-                    swipeRefreshLayout.setRefreshing(true);
-                    client.get(getActivity(), OneApi.getOneTodayHome(date), handler);
-                    swipeRefreshLayout.setRefreshing(false);
-                    //设置最新的时间
-                    try {
-                        date = DateUtils.parseDate(date);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                            }
-
-                            loading = true;
-                        }
-                    }
-                });
+            public void onLoadMore(int current_page) {
+                client.get(getActivity(), OneApi.getOneTodayHome(date), handler);
+                //设置最新的时间
+                date = DateUtils.parseDate(date);
+            }
+        });
     }
 
 
-    private List<Daily> setUpData(){
+    private List<Daily> setUpData() {
         dailyList = new ArrayList<>();
         return dailyList;
     }
@@ -169,18 +121,23 @@ public class HomeFragment extends Fragment{
     public void init(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_container);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
     }
 
-    private void addItem() throws ParseException {
+    private void addItem(){
 
-        //每次加载6个
-        for (int i = 0 ; i < 4;i ++){
+        for (int i = 0; i < 3; i++) {
             client.get(getActivity(), OneApi.getOneTodayHome(date), handler);
-            //设置最新的时间
             date = DateUtils.parseDate(date);
         }
-
-
     }
 
+    @Override
+    public void onRefresh() {
+        Snackbar snackbar = Snackbar.make(recyclerView, "已经是最新的咯 :) ", Snackbar.LENGTH_SHORT);
+        snackbar.show();
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }

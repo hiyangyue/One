@@ -1,8 +1,7 @@
 package com.example.yang.yige.fragment;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.yang.yige.R;
 import com.example.yang.yige.adapter.QuestionItemAdapter;
+import com.example.yang.yige.listener.EndlessRecyclerOnScrollListener;
 import com.example.yang.yige.model.Question;
 import com.example.yang.yige.utils.JsonParseUtils;
 import com.example.yang.yige.utils.OneApi;
@@ -35,10 +35,6 @@ public class QuestionFragment extends Fragment {
     private QuestionItemAdapter adapter;
     private String date;
     private int count = 1;
-
-    private boolean loading = true;
-    private int firstVisiblesItems,visibleCount,totalItemCount;
-    private int previousTotal = 0;
 
     private AsyncHttpClient client = new AsyncHttpClient();
     private AsyncHttpResponseHandler handler = new BaseJsonHttpResponseHandler<Question>() {
@@ -96,36 +92,18 @@ public class QuestionFragment extends Fragment {
         adapter = new QuestionItemAdapter(getActivity(),questionList);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                visibleCount = layoutManager.getChildCount();
-                totalItemCount = layoutManager.getItemCount();
-                firstVisiblesItems = layoutManager.findFirstVisibleItemPosition();
-
-                if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-
-                if (!loading && (totalItemCount - visibleCount) <= (firstVisiblesItems + visibleCount)) {
-
-                    client.get(getActivity(), OneApi.getOneTodayQuestion(date, count),handler);
-                    //设置最新的count
-                    count = count + 1;
-
-                    loading = true;
-                }
+            public void onLoadMore(int current_page) {
+                client.get(getActivity(), OneApi.getOneTodayQuestion(date, count),handler);
+                //设置最新的count
+                count = count + 1;
             }
         });
     }
 
     private void setUpQuestionData(){
-        for (int i = 1 ; i <= 6 ; i ++){
+        for (int i = 1 ; i <= 3 ; i ++){
             client.get(getActivity(), OneApi.getOneTodayQuestion(date, count),handler);
             count = count + 1;
         }

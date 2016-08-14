@@ -31,10 +31,6 @@ public class Article {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getContent() {
         return content;
     }
@@ -47,15 +43,8 @@ public class Article {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public String getWebLink() {
         return webLink;
     }
 
-    public void setWebLink(String webLink) {
-        this.webLink = webLink;
-    }
 }

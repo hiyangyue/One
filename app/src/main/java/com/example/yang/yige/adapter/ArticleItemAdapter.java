@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
 
 //        String contentArticle = article.getContent().replaceAll("<br>","\n");
 //        articleContent.setText(contentArticle.replaceAll("1",""));
-        articleContent.setText(article.getContent().replaceAll("<br>","\n"));
+        articleContent.setText(article.getContent().replaceAll("<br>"," "));
         articleDate.setText(date);
     }
 
@@ -69,7 +68,7 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
         return articleList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView articleTitle,articleContent,articleAuthor,articleDate;
         RelativeLayout relativeLayout;
@@ -83,14 +82,7 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
             articleContent = (TextView) itemView.findViewById(R.id.article_content);
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.article_relativeLayout);
 
-            relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Article article = articleList.get(getLayoutPosition());
-                    startArticleDetailActivity(article.getWebLink());
-                }
-            });
-
+            itemView.setOnClickListener(this);
         }
 
         private void startArticleDetailActivity(String artilceUrl){
@@ -99,6 +91,12 @@ public class ArticleItemAdapter extends RecyclerView.Adapter<ArticleItemAdapter.
             bundle.putString("article_url",artilceUrl);
             intent.putExtras(bundle);
             context.startActivity(intent);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Article article = articleList.get(getLayoutPosition());
+            startArticleDetailActivity(article.getWebLink());
         }
     }
 }

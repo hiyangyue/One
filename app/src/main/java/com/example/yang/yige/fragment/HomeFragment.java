@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new SlideInUpAnimator());
         recyclerView.setHasFixedSize(true);
-        adapter = new HomeItemAdapter(getContext(), setUpData());
+        adapter = new HomeItemAdapter(getActivity(), setUpData());
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {

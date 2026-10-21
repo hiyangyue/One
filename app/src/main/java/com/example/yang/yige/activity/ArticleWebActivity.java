@@ -38,7 +38,7 @@ public class ArticleWebActivity extends AppCompatActivity {
         webView.setWebChromeClient(new ChromeClient());
         webView.setWebViewClient(new ViewClient());
         webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setAppCacheEnabled(true);
+        // setAppCacheEnabled was removed in API 33.
         webView.loadUrl(articleUrl);
     }
 

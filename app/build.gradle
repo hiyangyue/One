@@ -1,34 +1,47 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    namespace "com.example.yang.yige"
+    compileSdkVersion 33
+    buildToolsVersion "33.0.2"
 
     defaultConfig {
         applicationId "com.example.yang.yige"
         minSdkVersion 21
+        // Cleartext ONE API and legacy external-storage saves. See README.
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.android.support:support-v4:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:cardview-v7:22.2.1'
-    compile 'com.loopj.android:android-async-http:1.4.9'
-    compile'org.apache.httpcomponents:httpcore:4.4.1'
-    compile 'com.commit451:PhotoView:1.2.4'
-    compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
-
-    compile 'com.github.bumptech.glide:glide:3.5.2'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:design:22.2.1'
+    implementation 'com.android.support:support-v4:22.2.1'
+    implementation 'com.android.support:recyclerview-v7:22.2.1'
+    implementation 'com.android.support:cardview-v7:22.2.1'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.1'
+    // Same uk.co.senab.photoview 1.2.4 classes. commit451's artifact was on jcenter.
+    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+    implementation 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
+    implementation 'com.github.bumptech.glide:glide:3.5.2'
 }

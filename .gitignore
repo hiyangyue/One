@@ -41,3 +41,46 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# =========================
+# Android / Gradle / IDE
+# =========================
+
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# Dalvik / ART
+*.dex
+
+# Java class files
+*.class
+
+# Generated output
+bin/
+gen/
+out/
+build/
+
+# Gradle
+.gradle/
+
+# Machine-local SDK path. Do not commit.
+local.properties
+
+# Android Studio / IntelliJ
+*.iml
+.idea/
+.navigation/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing keys and profiler output
+*.jks
+*.keystore
+*.hprof
+
+# Logs
+*.log

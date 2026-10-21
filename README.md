@@ -114,7 +114,7 @@ sdk.dir=/path/to/android/sdk
 ./gradlew assembleDebug --no-daemon --max-workers=2
 ```
 
-`gradle.properties` 中有 `org.gradle.jvmargs=-Xmx1536m`。调试 APK 在 `app/build/outputs/apk/debug/app-debug.apk`。Release 构建关闭了混淆（`minifyEnabled false`）。
+`gradle.properties` 中有 `org.gradle.jvmargs=-Xmx1536m`。调试 APK 在 `app/build/outputs/apk/debug/app-debug.apk`。`assembleRelease` 关闭了混淆（`minifyEnabled false`），也没有配置签名，产物是 `app/build/outputs/apk/release/app-release-unsigned.apk`。
 
 `assembleDebug` 不编译 `androidTest`。那里的 `ApplicationTest` 仍继承 `android.test.ApplicationTestCase`，这个类在新的 `android.jar` 里已经没有了。
 

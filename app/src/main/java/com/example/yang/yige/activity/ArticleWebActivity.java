@@ -55,10 +55,10 @@ public class ArticleWebActivity extends AppCompatActivity {
                 this.finish();
                 break;
             case R.id.menu_share:
-                Intent intent = new Intent();
-                intent.putExtra(Intent.EXTRA_TEXT,articleUrl);
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, articleUrl);
                 intent.setType("text/plain");
-                startActivity(intent);
+                startActivity(Intent.createChooser(intent, getString(R.string.share)));
                 break;
         }
         return super.onOptionsItemSelected(item);

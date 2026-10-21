@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             daily = new Daily(title, author, content, thumbImgUrl, strOriginalImgUrl, strMarketTime);
 
             dailyList.add(daily);
-            adapter.notifyItemRangeInserted(dailyList.size(), 1);
+            adapter.notifyItemInserted(dailyList.size() - 1);
         }
 
         @Override

@@ -96,10 +96,13 @@ public class HomeDetailActivity extends AppCompatActivity implements View.OnClic
                         });
                 break;
             case R.id.img_send:
-                Intent intent = new Intent();
-                intent.putExtra(Intent.EXTRA_TEXT, OneApi.getOneTodayHome(strMarketTime.toString()));
+                if (strMarketTime == null) {
+                    break;
+                }
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, OneApi.getOneTodayHome(strMarketTime));
                 intent.setType("text/plain");
-                startActivity(intent);
+                startActivity(Intent.createChooser(intent, getString(R.string.share)));
                 break;
             case R.id.img_thumb:
                 Intent pictureIntent = new Intent(HomeDetailActivity.this, PictureActivity.class);
